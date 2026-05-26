@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="scripts/v1_create_table_client.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v2_create_table_external_request.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v3_create_table_batch_request.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v4_create_table_request.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v5_create_table_response_batch.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v6_create_table_external_response.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v7_create_table_response.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v8_create_table_outbox_message.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

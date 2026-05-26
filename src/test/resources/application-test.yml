@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    enabled: true
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+
+app:
+  emulator:
+    enabled: false

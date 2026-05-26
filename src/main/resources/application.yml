@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: client-service
+  datasource:
+    url: jdbc:postgresql://localhost:5488/client_service
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+app:
+  rabbit:
+    exchange:
+      client-events: client.events.exchange
+      external-request: client.external-request.exchange
+      external-response: client.external-response.exchange
+    queue:
+      external-request-fns: client.external-request.fns.queue
+      external-request-epgu: client.external-request.epgu.queue
+      external-response: client.external-response.queue
+      external-broadcast: client.external-broadcast.queue
+    routing-key:
+      client-created: client.created
+      client-updated: client.updated
+      client-deleted: client.deleted
+      external-request-fns: external-request.fns
+      external-request-epgu: external-request.epgu
+      external-response-fns: external-response.fns
+      external-response-epgu: external-response.epgu
+  feign:
+    application-service:
+      url: http://localhost:8082
+    report-service:
+      url: http://localhost:8083
+  emulator:
+    enabled: false
+  outbox:
+    poll-interval-ms: 5000
+    batch-size: 50
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

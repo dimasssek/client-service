@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: client-service-postgres
+    ports:
+      - "5488:5432"
+    environment:
+      POSTGRES_DB: client_service
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - client-service-postgres-data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: client-service-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  client-service-postgres-data:

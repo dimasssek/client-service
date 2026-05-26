@@ -1,0 +1,3 @@
+[submodule "src/contracts"]
+	path = src/contracts
+	url = https://github.com/dimasssek/contracts.git
