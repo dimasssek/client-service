@@ -13,5 +13,6 @@
     <include file="scripts/v6_create_table_external_response.sql" relativeToChangelogFile="true"/>
     <include file="scripts/v7_create_table_response.sql" relativeToChangelogFile="true"/>
     <include file="scripts/v8_create_table_outbox_message.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/v9_alter_table_client_drop_column_deleted.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

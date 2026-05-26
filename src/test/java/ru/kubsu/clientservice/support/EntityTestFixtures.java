@@ -48,8 +48,7 @@ public final class EntityTestFixtures {
                 .setInsuranceNumber("123-456-789 00")
                 .setAddressDefined(true)
                 .setResidenceAddressName("г. Москва, ул. Примерная, д. 1")
-                .setStatus(ClientStatus.ACTUAL)
-                .setDeleted(false);
+                .setStatus(ClientStatus.ACTUAL);
     }
 
     /**

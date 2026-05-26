@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
 import ru.kubsu.contracts.enums.service.client.ClientStatus;
 import ru.kubsu.contracts.enums.service.client.Gender;
 
@@ -28,6 +29,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
+@FieldNameConstants
 public class Client {
 
     /** Уникальный идентификатор клиента. */
@@ -92,8 +94,4 @@ public class Client {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ClientStatus status;
-
-    /** Признак удаления записи (маппится, логика — с Этапа 2). */
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
 }

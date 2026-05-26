@@ -1,8 +1,8 @@
 package ru.kubsu.clientservice.exception;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.kubsu.contracts.dto.service.client.ErrorResponseTo;
@@ -17,7 +17,6 @@ import ru.kubsu.contracts.exception.service.client.RequestNotFoundException;
  * Глобальный обработчик исключений client-service.
  */
 @RestControllerAdvice
-@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     /**
@@ -73,6 +72,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ClientValidationException.class)
     public ResponseEntity<ErrorResponseTo> handleClientValidation(ClientValidationException exception) {
         return buildResponse(HttpStatus.BAD_REQUEST, exception);
+    }
+
+    /**
+     * Обрабатывает ошибки валидации входных DTO.
+     *
+     * @param exception исключение валидации
+     * @return HTTP 400 с телом ошибки
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponseTo> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
+        String message = exception.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .orElse("Ошибка валидации входных данных");
+        ErrorResponseTo body = new ErrorResponseTo()
+                .setCode(ClientValidationException.ERROR_CODE)
+                .setMessage(message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     /**
