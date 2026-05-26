@@ -8,6 +8,10 @@ spring:
     listener:
       simple:
         auto-startup: false
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 10000
 
 app:
   emulator:

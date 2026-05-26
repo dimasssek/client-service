@@ -7,10 +7,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import tools.jackson.databind.json.JsonMapper;
 
 /**
@@ -19,19 +18,22 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Testcontainers
+@Transactional
 public abstract class IntegrationTestBase {
 
     /** Контейнер PostgreSQL alpine для интеграционных тестов. */
-    @Container
     protected static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("client_service")
             .withUsername("user")
             .withPassword("password");
 
     /** Контейнер RabbitMQ для интеграционных тестов. */
-    @Container
     protected static final RabbitMQContainer RABBIT = new RabbitMQContainer("rabbitmq:3-management-alpine");
+
+    static {
+        POSTGRES.start();
+        RABBIT.start();
+    }
 
     /** MockMvc для HTTP-запросов в тестах. */
     @Autowired
