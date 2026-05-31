@@ -32,7 +32,7 @@ import ru.kubsu.contracts.dto.service.client.ExternalRequestManualCreateRequest;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestQueryParams;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestSummaryTo;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestTo;
-import ru.kubsu.contracts.dto.service.client.PageData;
+import ru.kubsu.contracts.dto.common.PageData;
 import ru.kubsu.contracts.dto.service.client.RequestTo;
 import ru.kubsu.contracts.enums.service.client.RequestStatus;
 import ru.kubsu.contracts.enums.service.client.SourceType;

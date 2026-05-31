@@ -17,7 +17,7 @@ import ru.kubsu.contracts.dto.service.client.ExternalRequestListTo;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestManualCreateRequest;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestQueryParams;
 import ru.kubsu.contracts.dto.service.client.ExternalRequestTo;
-import ru.kubsu.contracts.dto.service.client.PageData;
+import ru.kubsu.contracts.dto.common.PageData;
 
 import java.util.List;
 import java.util.UUID;

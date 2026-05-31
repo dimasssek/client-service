@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.kubsu.contracts.dto.service.client.ErrorResponseTo;
+import ru.kubsu.contracts.dto.common.ErrorResponseTo;
 import ru.kubsu.contracts.exception.service.client.BatchRequestNotFoundException;
 import ru.kubsu.contracts.exception.service.client.ClientAlreadyExistsException;
 import ru.kubsu.contracts.exception.service.client.ClientNotFoundException;

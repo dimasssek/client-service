@@ -23,7 +23,7 @@ import ru.kubsu.contracts.dto.service.client.ClientHistoryEntryTo;
 import ru.kubsu.contracts.dto.service.client.ClientQueryParams;
 import ru.kubsu.contracts.dto.service.client.ClientTo;
 import ru.kubsu.contracts.dto.service.client.ClientUpdateRequest;
-import ru.kubsu.contracts.dto.service.client.PageData;
+import ru.kubsu.contracts.dto.common.PageData;
 import ru.kubsu.contracts.enums.service.client.ClientStatus;
 import ru.kubsu.contracts.enums.service.client.OutboxEventType;
 import ru.kubsu.contracts.exception.service.client.ClientNotFoundException;

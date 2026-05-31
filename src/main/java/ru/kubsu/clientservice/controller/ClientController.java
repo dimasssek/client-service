@@ -18,7 +18,7 @@ import ru.kubsu.contracts.dto.service.client.ClientHistoryEntryTo;
 import ru.kubsu.contracts.dto.service.client.ClientQueryParams;
 import ru.kubsu.contracts.dto.service.client.ClientTo;
 import ru.kubsu.contracts.dto.service.client.ClientUpdateRequest;
-import ru.kubsu.contracts.dto.service.client.PageData;
+import ru.kubsu.contracts.dto.common.PageData;
 
 import java.util.List;
 import java.util.UUID;

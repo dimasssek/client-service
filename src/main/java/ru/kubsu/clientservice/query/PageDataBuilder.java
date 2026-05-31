@@ -1,8 +1,8 @@
 package ru.kubsu.clientservice.query;
 
 import org.springframework.data.domain.Page;
-import ru.kubsu.contracts.dto.service.client.PageData;
-import ru.kubsu.contracts.dto.service.client.PageMetaData;
+import ru.kubsu.contracts.dto.common.PageData;
+import ru.kubsu.contracts.dto.common.PageMetaData;
 
 import java.util.List;
 import java.util.function.Function;
