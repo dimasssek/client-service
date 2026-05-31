@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kubsu.clientservice.entity.Client;
+import ru.kubsu.clientservice.mapper.ClientHistoryMapper;
 import ru.kubsu.clientservice.mapper.ClientMapper;
 import ru.kubsu.clientservice.outbox.OutboxWriter;
 import ru.kubsu.clientservice.query.ClientPageableFactory;
@@ -15,8 +16,10 @@ import ru.kubsu.clientservice.query.ClientPredicateBuilder;
 import ru.kubsu.clientservice.query.ClientSortParser;
 import ru.kubsu.clientservice.query.PageDataBuilder;
 import ru.kubsu.clientservice.repository.ClientRepository;
+import ru.kubsu.clientservice.repository.RequestRepository;
 import ru.kubsu.clientservice.service.ClientService;
 import ru.kubsu.contracts.dto.service.client.ClientCreateRequest;
+import ru.kubsu.contracts.dto.service.client.ClientHistoryEntryTo;
 import ru.kubsu.contracts.dto.service.client.ClientQueryParams;
 import ru.kubsu.contracts.dto.service.client.ClientTo;
 import ru.kubsu.contracts.dto.service.client.ClientUpdateRequest;
@@ -26,6 +29,7 @@ import ru.kubsu.contracts.enums.service.client.OutboxEventType;
 import ru.kubsu.contracts.exception.service.client.ClientNotFoundException;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,8 +42,14 @@ public class ClientServiceImpl implements ClientService {
     /** Репозиторий клиентов. */
     private final ClientRepository clientRepository;
 
+    /** Репозиторий запросов по клиентам. */
+    private final RequestRepository requestRepository;
+
     /** MapStruct-маппер клиента. */
     private final ClientMapper clientMapper;
+
+    /** MapStruct-маппер истории клиента. */
+    private final ClientHistoryMapper clientHistoryMapper;
 
     /** Запись outbox-сообщений. */
     private final OutboxWriter outboxWriter;
@@ -68,6 +78,21 @@ public class ClientServiceImpl implements ClientService {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
         return clientMapper.toClientTo(client);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<ClientHistoryEntryTo> getHistory(UUID id) {
+        if (!clientRepository.existsById(id)) {
+            throw new ClientNotFoundException(id);
+        }
+        return requestRepository.findHistoryByClientId(id).stream()
+                .map(request -> clientHistoryMapper.toHistoryEntry(
+                        request, request.getBatchRequest().getExternalRequest()))
+                .toList();
     }
 
     /**

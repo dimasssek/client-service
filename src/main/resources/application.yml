@@ -44,6 +44,8 @@ app:
       external-request-epgu: external-request.epgu
       external-response-fns: external-response.fns
       external-response-epgu: external-response.epgu
+  batching:
+    size: 50
   feign:
     application-service:
       url: http://localhost:8082
@@ -51,9 +53,13 @@ app:
       url: http://localhost:8083
   emulator:
     enabled: false
+    min-delay-ms: 10000
+    max-delay-ms: 20000
   outbox:
     poll-interval-ms: 5000
     batch-size: 50
+    max-attempts: 5
+    max-error-length: 2000
 
 springdoc:
   api-docs:

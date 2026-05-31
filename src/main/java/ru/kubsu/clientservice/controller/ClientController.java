@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kubsu.clientservice.service.ClientService;
 import ru.kubsu.contracts.dto.service.client.ClientCreateRequest;
+import ru.kubsu.contracts.dto.service.client.ClientHistoryEntryTo;
 import ru.kubsu.contracts.dto.service.client.ClientQueryParams;
 import ru.kubsu.contracts.dto.service.client.ClientTo;
 import ru.kubsu.contracts.dto.service.client.ClientUpdateRequest;
 import ru.kubsu.contracts.dto.service.client.PageData;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,6 +55,17 @@ public class ClientController {
     @GetMapping("/{id}")
     public ClientTo getById(@PathVariable UUID id) {
         return clientService.getById(id);
+    }
+
+    /**
+     * Возвращает историю запросов клиента во внешние ведомства.
+     *
+     * @param id идентификатор клиента
+     * @return список записей истории
+     */
+    @GetMapping("/{id}/history")
+    public List<ClientHistoryEntryTo> getHistory(@PathVariable UUID id) {
+        return clientService.getHistory(id);
     }
 
     /**

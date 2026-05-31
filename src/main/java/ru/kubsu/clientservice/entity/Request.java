@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.kubsu.contracts.enums.service.client.Gender;
+import ru.kubsu.contracts.enums.service.client.RequestOutcome;
 import ru.kubsu.contracts.enums.service.client.RequestStatus;
 import ru.kubsu.contracts.enums.service.client.RequestType;
 
@@ -60,6 +61,11 @@ public class Request {
     /** Детализация ошибки. */
     @Column(name = "error_message")
     private String errorMessage;
+
+    /** Итог обработки ответа ведомства. */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "outcome")
+    private RequestOutcome outcome;
 
     /** Имя. */
     @Column(name = "first_name")

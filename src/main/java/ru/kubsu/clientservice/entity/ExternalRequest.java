@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
 import ru.kubsu.contracts.enums.service.client.RequestStatus;
 import ru.kubsu.contracts.enums.service.client.SourceType;
 
@@ -28,6 +29,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
+@FieldNameConstants
 public class ExternalRequest {
 
     /** Уникальный идентификатор внешнего запроса. */

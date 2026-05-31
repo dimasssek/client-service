@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.kubsu.contracts.dto.service.client.ErrorResponseTo;
+import ru.kubsu.contracts.exception.service.client.BatchRequestNotFoundException;
 import ru.kubsu.contracts.exception.service.client.ClientAlreadyExistsException;
 import ru.kubsu.contracts.exception.service.client.ClientNotFoundException;
 import ru.kubsu.contracts.exception.service.client.ClientServiceException;
@@ -38,6 +39,17 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ExternalRequestNotFoundException.class)
     public ResponseEntity<ErrorResponseTo> handleExternalRequestNotFound(ExternalRequestNotFoundException exception) {
+        return buildResponse(HttpStatus.NOT_FOUND, exception);
+    }
+
+    /**
+     * Обрабатывает исключение «пакетный запрос не найден».
+     *
+     * @param exception исключение
+     * @return HTTP 404 с телом ошибки
+     */
+    @ExceptionHandler(BatchRequestNotFoundException.class)
+    public ResponseEntity<ErrorResponseTo> handleBatchRequestNotFound(BatchRequestNotFoundException exception) {
         return buildResponse(HttpStatus.NOT_FOUND, exception);
     }
 

@@ -3,6 +3,7 @@ package ru.kubsu.clientservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import ru.kubsu.clientservice.config.RabbitQueueProperties;
 import ru.kubsu.clientservice.entity.OutboxMessage;
 import ru.kubsu.clientservice.repository.OutboxMessageRepository;
 import ru.kubsu.clientservice.service.ClientPersistenceService;
@@ -42,6 +43,10 @@ class ClientCrudIT extends IntegrationTestBase {
     /** Репозиторий outbox-сообщений. */
     @Autowired
     private OutboxMessageRepository outboxMessageRepository;
+
+    /** Свойства имён RabbitMQ для проверки outbox-записей. */
+    @Autowired
+    private RabbitQueueProperties rabbitQueueProperties;
 
     /**
      * Проверяет создание клиента и запись outbox-события CLIENT_CREATED.
@@ -241,7 +246,26 @@ class ClientCrudIT extends IntegrationTestBase {
                 .toList();
 
         assertThat(messages).hasSize(1);
-        assertThat(messages.getFirst().getRoutingKey()).isNotBlank();
-        assertThat(messages.getFirst().getPayload()).contains(clientId.toString());
+
+        OutboxMessage message = messages.getFirst();
+        assertThat(message.getExchangeName())
+                .isEqualTo(rabbitQueueProperties.getExchange().getClientEvents());
+        assertThat(message.getRoutingKey()).isEqualTo(resolveExpectedRoutingKey(eventType));
+        assertThat(message.getPayload()).contains(clientId.toString());
+    }
+
+    /**
+     * Возвращает ожидаемый routing key для типа outbox-события клиента.
+     *
+     * @param eventType тип события
+     * @return routing key из application.yml
+     */
+    private String resolveExpectedRoutingKey(OutboxEventType eventType) {
+        return switch (eventType) {
+            case CLIENT_CREATED -> rabbitQueueProperties.getRoutingKey().getClientCreated();
+            case CLIENT_UPDATED -> rabbitQueueProperties.getRoutingKey().getClientUpdated();
+            case CLIENT_DELETED -> rabbitQueueProperties.getRoutingKey().getClientDeleted();
+            default -> throw new IllegalArgumentException("Неподдерживаемый тип outbox-события: " + eventType);
+        };
     }
 }

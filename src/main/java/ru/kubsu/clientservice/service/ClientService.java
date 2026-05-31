@@ -1,11 +1,13 @@
 package ru.kubsu.clientservice.service;
 
 import ru.kubsu.contracts.dto.service.client.ClientCreateRequest;
+import ru.kubsu.contracts.dto.service.client.ClientHistoryEntryTo;
 import ru.kubsu.contracts.dto.service.client.ClientQueryParams;
 import ru.kubsu.contracts.dto.service.client.ClientTo;
 import ru.kubsu.contracts.dto.service.client.ClientUpdateRequest;
 import ru.kubsu.contracts.dto.service.client.PageData;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,6 +30,14 @@ public interface ClientService {
      * @return клиент
      */
     ClientTo getById(UUID id);
+
+    /**
+     * Возвращает историю запросов клиента во внешние ведомства.
+     *
+     * @param id идентификатор клиента
+     * @return список записей истории
+     */
+    List<ClientHistoryEntryTo> getHistory(UUID id);
 
     /**
      * Выполняет поиск клиентов по параметрам.
