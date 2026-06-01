@@ -5,7 +5,7 @@ spring:
   application:
     name: client-service
   datasource:
-    url: jdbc:postgresql://localhost:5488/client_service
+    url: jdbc:postgresql://localhost:5488/client-service
     username: user
     password: password
     driver-class-name: org.postgresql.Driver

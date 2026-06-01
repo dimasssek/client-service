@@ -23,7 +23,7 @@ public abstract class IntegrationTestBase {
 
     /** Контейнер PostgreSQL alpine для интеграционных тестов. */
     protected static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine")
-            .withDatabaseName("client_service")
+            .withDatabaseName("client-service")
             .withUsername("user")
             .withPassword("password");
 
