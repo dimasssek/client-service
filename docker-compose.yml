@@ -1,6 +1,9 @@
+# DEPRECATED: use bsps-infra/docker-compose.yml instead.
+# This file is kept for reference only.
+
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:16
     container_name: client-service-postgres
     ports:
       - "5488:5432"
@@ -12,7 +15,7 @@ services:
       - client-service-postgres-data:/var/lib/postgresql/data
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3-management
     container_name: client-service-rabbitmq
     ports:
       - "5672:5672"

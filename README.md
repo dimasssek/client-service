@@ -15,7 +15,11 @@
 
 ### 1. Инфраструктура
 
+> **Используйте [bsps-infra](https://github.com/dimasssek/bsps-infra)** — единый `docker compose` для всей инфраструктуры.
+> Локальный `docker-compose.yml` в этом репозитории **deprecated**.
+
 ```bash
+cd ../bsps-infra
 docker compose up -d
 ```
 
@@ -25,7 +29,7 @@ docker compose up -d
 | RabbitMQ    | 5672  |
 | RabbitMQ UI | 15672 |
 
-Параметры подключения — в `docker-compose.yml` и `application.yml`.
+Подробнее: `bsps-infra/docs/LOCAL_SETUP.md`. Параметры подключения — в `application.yml`.
 
 ### 2. Submodule контрактов
 
