@@ -9,25 +9,13 @@
 - MapStruct, QueryDSL, Testcontainers
 - Контракты: git submodule `src/contracts` → [dimasssek/contracts](https://github.com/dimasssek/contracts.git)
 
-## Быстрый старт
+## Старт
 
 ### 1. Инфраструктура
 
-> **Используйте [bsps-infra](https://github.com/dimasssek/bsps-infra)** — единый `docker compose` для всей инфраструктуры.
-> Локальный `docker-compose.yml` в этом репозитории **deprecated**.
-
-```bash
-cd ../bsps-infra
-docker compose up -d
-```
-
-| Сервис      | Порт  |
-|-------------|-------|
-| Postgres    | 5488  |
-| RabbitMQ    | 5672  |
-| RabbitMQ UI | 15672 |
-
-Подробнее: `bsps-infra/docs/LOCAL_SETUP.md`. Параметры подключения — в `application.yml`.
+> **[bsps-infra](https://github.com/dimasssek/bsps-infra)** — единый `docker compose` для всей инфраструктуры.
+> 
+> **[bsps-infra](https://github.com/dimasssek/bsps-infra)** — единый `docker compose` для всей инфраструктуры.
 
 ### 2. Submodule контрактов
 
@@ -57,10 +45,6 @@ app:
 ```
 
 Эмулятор слушает очереди FNS/EPGU, через задержку публикует ответ в `client.external-response.exchange`. Ответы обрабатывает `ExternalResponseListener`.
-
-## API
-
-Префикс `/api/v1` не используется — его добавляет gateway.
 
 ### Клиенты
 
@@ -119,14 +103,6 @@ app:
 | `client.external-response.queue` | `ExternalResponseListener` |
 | `client.external-broadcast.queue` | `BroadcastListener` |
 
-## Тесты
-
-```bash
-./mvnw test
-```
-
-Интеграционные тесты используют Testcontainers (Postgres 16 + RabbitMQ). Планировщик outbox в тестах отключён (`spring.task.scheduling.enabled=false`); publisher вызывается явно.
-
 ## Структура проекта
 
 ```
@@ -135,7 +111,7 @@ src/main/java/ru/kubsu/clientservice/
 ├── service/          Бизнес-логика
 ├── outbox/           Outbox writer + publisher
 ├── listener/         RabbitMQ consumers
-├── integration/      Эмулятор ведомств (+ Feign-заглушки, не подключены)
+├── integration/      Эмулятор ведомств 
 ├── response/         Обработка ответов и рассылок
 ├── config/           RabbitMQ, outbox, emulator properties
 └── entity/           JPA-сущности
@@ -145,18 +121,14 @@ src/contracts/        Git submodule — DTO, enums, messaging, exceptions
 
 ## Contracts submodule
 
-Контракты живут в отдельном репозитории и подключаются как submodule:
-
-```bash
-# после изменений в src/contracts
-cd src/contracts
-git add .
-git commit -m "..."
-git push
-
-cd ../..
-git add src/contracts
-git commit -m "Update contracts submodule"
-```
-
 Подробнее: [src/contracts/README.md](src/contracts/README.md)
+
+## Ссылки на микровсервисы 
+
+> **[bsps-infra](https://github.com/dimasssek/bsps-infra)** — инфраструктура системы.
+>
+> **[application-service](https://github.com/dimasssek/application-gateway)** - микросервис обработки банковских заявлений
+> 
+> **[application-gateway](https://github.com/dimasssek/application-gateway)** - микросервис API-шлюза системы
+> 
+> **[application-ui](https://github.com/dimasssek/application-ui)** - пользовательский интерфейс системы
